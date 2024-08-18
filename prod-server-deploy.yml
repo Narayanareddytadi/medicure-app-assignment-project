@@ -18,4 +18,4 @@
 
 
   - name: deploy to prod-server
-    command: docker run -itd -p 8081:8081 narayana150/medicure-app:1.0
+    command: docker run -itd -p 8081:8081 narayana150/medicure-app:2.0
