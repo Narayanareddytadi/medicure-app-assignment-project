@@ -1,5 +1,7 @@
 - hosts: prod-server
   become: true
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
   tasks:
     - name: update cache
       apt:
@@ -28,3 +30,4 @@
         ports:
           - "8081:8081"
       when: port_check.rc != 0
+
