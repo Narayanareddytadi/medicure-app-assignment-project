@@ -1,31 +1,21 @@
 - hosts: test-server
   become: true
   tasks:
-    - name: update cache
-      apt:
-        update_cache: yes
+  - name: update cache
+    apt:
+      update_cache: yes
 
-    - name: install docker
-      apt:
-        pkg: docker.io
-        state: present
+  - name: install docker
+    apt:
+      pkg: docker.io
+      state: present
 
-    - name: start docker service
-      service:
-        name: docker
-        state: started
-        enabled: true
+  - name: start docker service
+    service:
+      name: docker
+      state: started
+      enabled: true
 
-    - name: Check if port 8081 is in use
-      shell: "lsof -i :8081"
-      register: port_check
-      ignore_errors: true
 
-    - name: Run Docker container if port 8081 is not in use
-      community.docker.docker_container:
-        name: my_container
-        image: narayana150/medicure-app:2.0
-        ports:
-          - "8081:8081"
-      when: port_check.rc != 0
-
+  - name: deploy to prod-server
+    command: docker run -itd -p 8081:8081 narayana150/medicure-app:2.0
